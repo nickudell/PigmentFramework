@@ -10,7 +10,7 @@ using System.Globalization;
 namespace Pigment.Engine.Rendering
 {
     /// <summary>
-    /// A mesh
+    /// A mesh object for handling .obj file loading, vertex / index buffer storage and rendering and for pairing meshes with materials (to do)
     /// </summary>
     /// <typeparam name="V">The type of Vertex the mesh uses</typeparam>
     public class Mesh<V> : RenderableBase<V>
@@ -24,11 +24,13 @@ namespace Pigment.Engine.Rendering
         /// <param name="device">The Direct3D11 device to use.</param>
         /// <param name="vertices">The vertices of this mesh.</param>
         /// <param name="vertexTopology">The vertex topology.</param>
+        /// <param name="textureFileNames">The texture file names. textureFileNames[0] is diffuse, and textureFileNames[1] is normal mapping</param>
         public Mesh(Device device, List<V> vertices, PrimitiveTopology vertexTopology, string[] textureFileNames) : base(device,vertices,vertexTopology)
         {
             Textures = new Texture[textureFileNames.Length];
             for (int i = 0; i < textureFileNames.Length; i++)
             {
+                //Create the Texture from the image file
                 Textures[i] = new Rendering.Texture(device, textureFileNames[i]);
             }
         }
@@ -63,7 +65,7 @@ namespace Pigment.Engine.Rendering
             /// </summary>
             public short[] VertexIndices;
             /// <summary>
-            /// The tex coord indices
+            /// The texture coordinate indices
             /// </summary>
             public short[] TexCoordIndices;
             /// <summary>
@@ -72,6 +74,14 @@ namespace Pigment.Engine.Rendering
             public short[] NormalIndices;
         }
 
+        /// <summary>
+        /// Loads the a .obj file and returns a list of vertex positions, a list of normals, a list of texture coordinates and a list of faces for reconstituting into vertex buffers.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="vertexPositions">The list of vertex positions.</param>
+        /// <param name="normals">The list of normals.</param>
+        /// <param name="texCoords">The list of texture coordinates.</param>
+        /// <param name="faces">The list of faces.</param>
         private static void LoadObj(string fileName, out List<Vector3> vertexPositions, out List<Vector3> normals, out List<Vector2> texCoords, out List<Face> faces)
         {
             StreamReader sr = new StreamReader(File.OpenRead(fileName));
@@ -138,6 +148,12 @@ namespace Pigment.Engine.Rendering
             sr.Close();
         }
 
+        /// <summary>
+        /// Creates a mesh from a .obj file
+        /// </summary>
+        /// <param name="device">The D3D device for creating the vertex buffers.</param>
+        /// <param name="fileName">The path to the .obj file.</param>
+        /// <returns></returns>
         public static Mesh<V> FromObj(Device device, string fileName)
         {
             List<V> vertices = new List<V>();
@@ -191,6 +207,14 @@ namespace Pigment.Engine.Rendering
                                                                                                                                 System.IO.Directory.GetCurrentDirectory() + "/Textures/metal_n.jpg"});
         }
 
+        /// <summary>
+        /// Builds three vertex objects that make up a .obj face
+        /// </summary>
+        /// <param name="vertexPositions">The list of vertex positions.</param>
+        /// <param name="normals">The list of normals.</param>
+        /// <param name="texCoords">The list of texture coordinates.</param>
+        /// <param name="face">The face to build.</param>
+        /// <returns>An array containing three VertexPosTexNorm objects, correctly filled with the corresponding vertex positions, normals and texture coordinates for the face supplied.</returns>
         private static VertexPosTexNorm[] BuildFace(List<Vector3> vertexPositions, List<Vector3> normals, List<Vector2> texCoords, Face face)
         {
             VertexPosTexNorm[] vertices = new VertexPosTexNorm[3];
