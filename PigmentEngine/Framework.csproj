@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D44675B9-380E-473D-94D6-330749492721}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PigmentEngine</RootNamespace>
+    <AssemblyName>PigmentEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\SDKs\SlimDX Jan2012\Bin\net40\x86\SlimDX.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdjacencyFlags.cs" />
+    <Compile Include="BarnesHutTree.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="D3DImageSlimDX.cs" />
+    <Compile Include="Frustum.cs" />
+    <Compile Include="IAngled.cs" />
+    <Compile Include="IBinormal.cs" />
+    <Compile Include="IColoured.cs" />
+    <Compile Include="IMassed.cs" />
+    <Compile Include="IMoveable.cs" />
+    <Compile Include="INormal.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="IPositioned.cs" />
+    <Compile Include="IRotateable.cs" />
+    <Compile Include="ITangent.cs" />
+    <Compile Include="ITextured.cs" />
+    <Compile Include="Listening.cs" />
+    <Compile Include="MultiRenderTextureHelper.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="OcTree.cs" />
+    <Compile Include="Renderer.cs" />
+    <Compile Include="Rendering\Bitmap.cs" />
+    <Compile Include="Rendering\Common.cs" />
+    <Compile Include="Rendering\Control.cs" />
+    <Compile Include="Rendering\DynamicMesh.cs" />
+    <Compile Include="Rendering\Font.cs" />
+    <Compile Include="Rendering\FontChar.cs" />
+    <Compile Include="Rendering\FontEngine.cs" />
+    <Compile Include="Rendering\FontFile.cs" />
+    <Compile Include="Rendering\Instance.cs" />
+    <Compile Include="Rendering\InstancedMesh.cs" />
+    <Compile Include="Rendering\IRenderable.cs" />
+    <Compile Include="Rendering\Light.cs" />
+    <Compile Include="Rendering\Mesh.cs" />
+    <Compile Include="Rendering\Mesh2.cs" />
+    <Compile Include="Rendering\Nodes.cs" />
+    <Compile Include="Rendering\PointLight.cs" />
+    <Compile Include="Rendering\Quad.cs" />
+    <Compile Include="Rendering\RenderableBase.cs" />
+    <Compile Include="Rendering\RenderableIndexed.cs" />
+    <Compile Include="Rendering\Shaders\BumpShaderClass.cs" />
+    <Compile Include="Rendering\Shaders\ColourShader.cs" />
+    <Compile Include="Rendering\Shaders\ColourTextureShader.cs" />
+    <Compile Include="Rendering\Shaders\FogShader.cs" />
+    <Compile Include="Rendering\Shaders\IInputLayoutProvider.cs" />
+    <Compile Include="Rendering\Shaders\LightShader.cs" />
+    <Compile Include="Rendering\Shaders\ShaderBase.cs" />
+    <Compile Include="Rendering\Shaders\TextureShader.cs" />
+    <Compile Include="Rendering\Shaders\TransparencyShader.cs" />
+    <Compile Include="Rendering\Shaders\WVPTransformShader.cs" />
+    <Compile Include="Rendering\StaticMesh.cs" />
+    <Compile Include="Rendering\TextQuad.cs" />
+    <Compile Include="Rendering\Texture.cs" />
+    <Compile Include="RenderTexture.cs" />
+    <Compile Include="RenderTextureBase.cs" />
+    <Compile Include="RenderTextureHelperNew.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="Sound.cs" />
+    <Compile Include="Speech.cs" />
+    <Compile Include="TileSet3D.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="VertexBase.cs" />
+    <Compile Include="Wave.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
