@@ -63,7 +63,7 @@ namespace Pigment.Engine.Rendering
             dx = new D3DHelper(640, 480);
             LoadShaders();
             LoadMeshes();
-            Sound.Sound sound = new Sound.Sound();
+            Sound.Audio sound = new Sound.Audio();
             Wave wave = new Wave("Sound/Music/M.wav");
             sound.AddSound(wave);
             CreateMatrices();

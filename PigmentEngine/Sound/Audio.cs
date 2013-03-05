@@ -4,7 +4,7 @@ using System;
 
 namespace Pigment.Engine.Sound
 {
-    public class Sound : IDisposable
+    public class Audio : IDisposable
     {
         /// <summary>
         /// The XAudio2 controller
@@ -20,9 +20,9 @@ namespace Pigment.Engine.Sound
         private List<SourceVoice> sources;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sound"/> class.
+        /// Initializes a new instance of the <see cref="Audio"/> class.
         /// </summary>
-        public Sound()
+        public Audio()
         {
             audio = new XAudio2();
             master = new MasteringVoice(audio);

@@ -107,12 +107,16 @@
     <Compile Include="RenderTextureBase.cs" />
     <Compile Include="RenderTextureHelperNew.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Sound.cs" />
-    <Compile Include="Speech.cs" />
+    <Compile Include="Sound\Audio.cs" />
+    <Compile Include="Sound\MoodGraph.cs" />
+    <Compile Include="Sound\MoodNode.cs" />
+    <Compile Include="Sound\Music.cs" />
+    <Compile Include="Sound\Phrase.cs" />
+    <Compile Include="Sound\Speech.cs" />
     <Compile Include="TileSet3D.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="VertexBase.cs" />
-    <Compile Include="Wave.cs" />
+    <Compile Include="Sound\Wave.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
