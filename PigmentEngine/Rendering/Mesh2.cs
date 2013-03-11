@@ -6,6 +6,7 @@ using System.IO;
 using System;
 using Pigment.WPF;
 using System.Globalization;
+using System.Diagnostics.Contracts;
 
 namespace Pigment.Engine.Rendering
 {
@@ -27,6 +28,10 @@ namespace Pigment.Engine.Rendering
         /// <param name="textureFileNames">The texture file names. textureFileNames[0] is diffuse, and textureFileNames[1] is normal mapping</param>
         public Mesh(Device device, List<V> vertices, PrimitiveTopology vertexTopology, string[] textureFileNames) : base(device,vertices,vertexTopology)
         {
+            Contract.Requires<ArgumentNullException>(device != null, "device");
+            Contract.Requires<ArgumentNullException>(vertices != null, "vertices");
+            Contract.Requires<ArgumentException>(textureFileNames.Length > 0,"textureFileNames");
+
             Textures = new Texture[textureFileNames.Length];
             for (int i = 0; i < textureFileNames.Length; i++)
             {
@@ -41,6 +46,7 @@ namespace Pigment.Engine.Rendering
         /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected override void Dispose(bool managed)
         {
+            Contract.Ensures(!managed || Textures == null, "If managed is true, Textures must be set to null by this function.");
             if (managed)
             {
                 if (Textures != null)
@@ -84,13 +90,17 @@ namespace Pigment.Engine.Rendering
         /// <param name="faces">The list of faces.</param>
         private static void LoadObj(string fileName, out List<Vector3> vertexPositions, out List<Vector3> normals, out List<Vector2> texCoords, out List<Face> faces)
         {
+            Contract.Requires<FileNotFoundException>(File.Exists(fileName),"fileName");
+
             StreamReader sr = new StreamReader(File.OpenRead(fileName));
             
             vertexPositions = new List<Vector3>();
             List<short> indices = new List<short>();
+
             normals = new List<Vector3>();
             texCoords = new List<Vector2>();
             faces = new List<Face>();
+
             while (!sr.EndOfStream)
             {
                 //get the line
@@ -156,11 +166,16 @@ namespace Pigment.Engine.Rendering
         /// <returns></returns>
         public static Mesh<V> FromObj(Device device, string fileName)
         {
+            Contract.Requires<ArgumentNullException>(device != null, "device");
+            Contract.Requires<ArgumentException>(File.Exists(fileName),"fileName");
+            Contract.Ensures(Contract.Result<Mesh<V>>() != null);
+
             List<V> vertices = new List<V>();
             List<Vector3> vertexPositions;
             List<Vector3> normals;
             List<Vector2> texCoords;
             List<Face> faces;
+
             LoadObj(fileName, out vertexPositions, out normals, out texCoords, out faces);
 
             foreach (Face face in faces)
@@ -188,7 +203,7 @@ namespace Pigment.Engine.Rendering
                     //Recalculate normal
                     Vector3 normal = Vector3.Cross(tangent, binormal);
                     normal.Normalize();
-
+                    //Convert VertexPosTexNorm to VertexPosTexNormTanBinorm and add to result
                     foreach (VertexPosTexNorm faceVertex in faceVertices)
                     {
                         VertexPosTexNormTanBinorm vertex2 = new VertexPosTexNormTanBinorm(faceVertex.Position, faceVertex.TexCoords, faceVertex.Normal, tangent, binormal);
@@ -217,6 +232,11 @@ namespace Pigment.Engine.Rendering
         /// <returns>An array containing three VertexPosTexNorm objects, correctly filled with the corresponding vertex positions, normals and texture coordinates for the face supplied.</returns>
         private static VertexPosTexNorm[] BuildFace(List<Vector3> vertexPositions, List<Vector3> normals, List<Vector2> texCoords, Face face)
         {
+            Contract.Requires<ArgumentNullException>(vertexPositions != null, "vertexPosition");
+            Contract.Requires<ArgumentNullException>(normals != null, "normals");
+            Contract.Requires<ArgumentNullException>(texCoords != null, "texCoords");
+            Contract.Ensures(Contract.Result<VertexPosTexNorm[]>().Length  ==3, "This method must return exactly 3 vertices.");
+
             VertexPosTexNorm[] vertices = new VertexPosTexNorm[3];
             int vertexIndex = face.VertexIndices[0] - 1;
             int texIndex = face.TexCoordIndices[0] - 1;

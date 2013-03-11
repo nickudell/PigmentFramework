@@ -108,9 +108,11 @@
     <Compile Include="RenderTextureHelperNew.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sound\Audio.cs" />
+    <Compile Include="Sound\BasicGeometryFactory.cs" />
     <Compile Include="Sound\MoodGraph.cs" />
     <Compile Include="Sound\MoodNode.cs" />
     <Compile Include="Sound\Music.cs" />
+    <Compile Include="Sound\NodeBase.cs" />
     <Compile Include="Sound\Phrase.cs" />
     <Compile Include="Sound\Speech.cs" />
     <Compile Include="TileSet3D.cs" />
