@@ -7,12 +7,12 @@ using System.Diagnostics.Contracts;
 
 namespace PigmentEngine.Sound
 {
-    public class NodeBase<T>
+    public class Node<T>
     {
         /// <summary>
         /// The next hop to take get to a different mood
         /// </summary>
-        private Dictionary<T, NodeBase<T>> nextHopTo;
+        private Dictionary<T, Node<T>> nextHopTo;
 
         /// <summary>
         /// Gets or sets the next hop to.
@@ -20,7 +20,7 @@ namespace PigmentEngine.Sound
         /// <value>
         /// The next hop to.
         /// </value>
-        public Dictionary<T, NodeBase<T>> NextHopTo
+        public Dictionary<T, Node<T>> NextHopTo
         {
             get
             {
@@ -53,7 +53,7 @@ namespace PigmentEngine.Sound
         /// <summary>
         /// The adjacencies
         /// </summary>
-        private List<Tuple<NodeBase<T>, int>> adjacencies;
+        private List<Tuple<Node<T>, int>> adjacencies;
 
         /// <summary>
         /// Gets or sets the adjacencies.
@@ -61,7 +61,7 @@ namespace PigmentEngine.Sound
         /// <value>
         /// The adjacencies.
         /// </value>
-        public List<Tuple<NodeBase<T>, int>> Adjacencies
+        public List<Tuple<Node<T>, int>> Adjacencies
         {
             get { return adjacencies; }
             set { adjacencies = value; }
@@ -72,12 +72,12 @@ namespace PigmentEngine.Sound
         /// </summary>
         /// <param name="mood">The mood.</param>
         /// <param name="phrase">The phrase.</param>
-        public NodeBase()
+        public Node()
         {
             Contract.Ensures(adjacencies != null, "adjacencies must not be null after this method executes.");
             Contract.Ensures(nextHopTo != null, "nextHopTo must not be null after this method executes.");
-            adjacencies = new List<Tuple<NodeBase<T>, int>>();
-            nextHopTo = new Dictionary<T, NodeBase<T>>();
+            adjacencies = new List<Tuple<Node<T>, int>>();
+            nextHopTo = new Dictionary<T, Node<T>>();
 
         }
 
@@ -87,7 +87,7 @@ namespace PigmentEngine.Sound
         /// <param name="mood">The mood.</param>
         /// <param name="phrase">The phrase.</param>
         /// <param name="adjacencies">The adjacent nodes with costs.</param>
-        public NodeBase(List<Tuple<NodeBase<T>, int>> adjacencies) : this()
+        public Node(List<Tuple<Node<T>, int>> adjacencies) : this()
         {
             Contract.Requires<ArgumentNullException>(adjacencies != null, "adjacencies");
             this.adjacencies = adjacencies;

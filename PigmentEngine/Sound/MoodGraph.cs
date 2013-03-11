@@ -7,12 +7,12 @@ using System.Diagnostics.Contracts;
 
 namespace PigmentEngine.Sound
 {
-    class MoodGraph
+    class Graph<T>
     {
         /// <summary>
         /// The nodes that make up the graph
         /// </summary>
-        private List<MoodNode> nodes;
+        private List<Node<T>> nodes;
 
         /// <summary>
         /// Gets or sets the nodes.
@@ -20,17 +20,17 @@ namespace PigmentEngine.Sound
         /// <value>
         /// The nodes that make up the graph.
         /// </value>
-        public List<MoodNode> Nodes
+        public List<Node<T>> Nodes
         {
             get { return nodes; }
             set { nodes = value; }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MoodGraph"/> class.
+        /// Initializes a new instance of the <see cref="Graph"/> class.
         /// </summary>
         /// <param name="nodes">The nodes.</param>
-        public MoodGraph(List<MoodNode> nodes)
+        public Graph(List<Node<T>> nodes)
         {
             Contract.Requires<ArgumentNullException>(nodes != null, "nodes");
             Contract.Ensures(this.nodes != null, "this.nodes must not be null after this method executes.");
@@ -38,19 +38,19 @@ namespace PigmentEngine.Sound
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MoodGraph"/> class.
+        /// Initializes a new instance of the <see cref="Graph"/> class.
         /// </summary>
-        public MoodGraph()
+        public Graph()
         {
             Contract.Ensures(this.nodes != null, "this.nodes must not be null after this method executes.");
-            this.nodes = new List<MoodNode>();
+            this.nodes = new List<Node<T>>();
         }
 
         /// <summary>
         /// Adds the node to the graph.
         /// </summary>
         /// <param name="node">The node to add.</param>
-        public void AddNode(MoodNode node)
+        public void AddNode(Node<T> node)
         {
             Contract.Ensures(nodes.Contains(node), "nodes must contain the supplied node after this method executes.");
             nodes.Add(node);
@@ -62,12 +62,46 @@ namespace PigmentEngine.Sound
         /// <param name="from">The from node.</param>
         /// <param name="to">The to node.</param>
         /// <param name="cost">The cost of the edge.</param>
-        public void AddDirectedEdge(MoodNode from, MoodNode to, int cost)
+        public void AddDirectedEdge(Node<T> from, Node<T> to, int cost)
         {
-            from.Adjacencies.Add(new Tuple<NodeBase<Mood>,int>((NodeBase<Mood>)to,cost));
-            foreach (MoodNode node in nodes)
+            from.Adjacencies.Add(new Tuple<Node<T>,int>((Node<T>)to,cost));
+            foreach (Node<T> node in nodes)
             {
                 ComputeShortestPath(node, to.Content);
+            }
+        }
+
+        /// <summary>
+        /// Computes the nearest hops for all nodes in the graph
+        /// </summary>
+        public void ComputeNearestHops()
+        {
+            //reset the next hops
+            foreach (Node<T> node in nodes)
+            {
+                foreach (T content in node.NextHopTo.Keys)
+                {
+                    node.NextHopTo[content] = null;
+                }
+            }
+            foreach (Node<T> node in nodes)
+            {
+                foreach (T content in node.NextHopTo.Keys)
+                {
+                    //only make paths for un-mapped entities
+                    if (node.NextHopTo[content] == null)
+                    {
+                        Queue<Node<T>> path = ComputeShortestPath(node, content);
+                        Node<T> current = path.Dequeue();
+                        while (path.Count > 0)
+                        {
+                            Node<T> next = path.Dequeue();
+                            current.NextHopTo[content] = next;
+                            current = next;
+                        }
+                        current.NextHopTo[content] = current;
+                    }
+                }
             }
         }
 
@@ -76,16 +110,17 @@ namespace PigmentEngine.Sound
         /// </summary>
         /// <param name="from">From.</param>
         /// <param name="to">To.</param>
-        public void ComputeShortestPath(MoodNode from, Mood to)
+        public Queue<Node<T>> ComputeShortestPath(Node<T> from, T to)
         {
             Contract.Requires<ArgumentNullException>(from != null, "from");
             Contract.Requires<ArgumentNullException>(to != null, "to");
             Contract.Requires<ArgumentException>(!from.Content.Equals(to), "from and to are equal");
 
-            Dictionary<NodeBase<Mood>, double> distances = new Dictionary<NodeBase<Mood>, double>();
-            List<NodeBase<Mood>> unvisited = new List<NodeBase<Mood>>();
-            Dictionary<NodeBase<Mood>, NodeBase<Mood>> previous = new Dictionary<NodeBase<Mood>, NodeBase<Mood>>();
-            foreach (NodeBase<Mood> node in nodes)
+            Dictionary<Node<T>, double> distances = new Dictionary<Node<T>, double>();
+            List<Node<T>> unvisited = new List<Node<T>>();
+            Dictionary<Node<T>, Node<T>> previous = new Dictionary<Node<T>, Node<T>>();
+            Queue<Node<T>> path = new Queue<Node<T>>();
+            foreach (Node<T> node in nodes)
             {
                 if (node.Equals(from))
                 {
@@ -99,10 +134,10 @@ namespace PigmentEngine.Sound
             }
             while (unvisited.Count > 0)
             {
-                NodeBase<Mood> current = null;
+                Node<T> current = null;
                 double minDist = double.PositiveInfinity;
                 //pick unvisited node with smallest distance
-                foreach (NodeBase<Mood> node in unvisited)
+                foreach (Node<T> node in unvisited)
                 {
                     if (minDist > distances[node])
                     {
@@ -125,7 +160,7 @@ namespace PigmentEngine.Sound
                     break;
                 }
                 //find rough distance to next node
-                foreach (Tuple<NodeBase<Mood>, int> nodeCostPair in from.Adjacencies)
+                foreach (Tuple<Node<T>, int> nodeCostPair in from.Adjacencies)
                 {
                     if (unvisited.Contains(nodeCostPair.Item1))
                     {
@@ -136,14 +171,18 @@ namespace PigmentEngine.Sound
                         }
                     }
                 }
-                if (current.Content.Equals(to))
+                if (current.Content.Equals(to)) //found the destination, build the node queue
                 {
-                    current.NextHopTo[to] = null;
+                    Stack<Node<T>> reversedPath = new Stack<Node<T>>();
+                    reversedPath.Push(current);
                     while (previous.ContainsKey(current))
                     {
-                        NodeBase<Mood> prevNode = previous[current];
-                        prevNode.NextHopTo[to] = current;
-                        current = prevNode;
+                        reversedPath.Push(previous[current]);
+                        current = previous[current];
+                    }
+                    while(reversedPath.Count > 0)
+                    {
+                        path.Enqueue(reversedPath.Pop());
                     }
                 }
                 else
@@ -151,6 +190,7 @@ namespace PigmentEngine.Sound
                     unvisited.Remove(current);
                 }
             }
+            return path;
         }
 
     }

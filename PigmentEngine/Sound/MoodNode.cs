@@ -31,9 +31,9 @@ namespace PigmentEngine.Sound
     }
 
     /// <summary>
-    /// 
+    /// Node which also handles phrasing for music
     /// </summary>
-    public class MoodNode : NodeBase<Mood>
+    public class MoodNode : Node<Mood>
     {
         /// <summary>
         /// The musical phrase
@@ -73,7 +73,7 @@ namespace PigmentEngine.Sound
         /// <param name="mood">The mood.</param>
         /// <param name="phrase">The phrase.</param>
         /// <param name="adjacencies">The adjacent nodes with costs.</param>
-        public MoodNode(Mood mood, Phrase phrase, List<Tuple<NodeBase<Mood>, int>> adjacencies) : base(adjacencies)
+        public MoodNode(Mood mood, Phrase phrase, List<Tuple<Node<Mood>, int>> adjacencies) : base(adjacencies)
         {
             Contract.Requires<ArgumentNullException>(phrase != null, "phrase");
             this.Content = mood;
