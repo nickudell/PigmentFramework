@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SlimDX;
+using Pigment.Engine.Rendering.Matter;
 namespace Pigment.Engine.Octree
 {
     public class BarnesHutTree<I> : Pigment.Engine.Octree.OcTree<I>, IMassed

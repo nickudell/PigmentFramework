@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SlimDX;
 using SlimDX.Direct3D11;
+using Pigment.Engine.Rendering.Matter;
 
 namespace Pigment.Engine
 {

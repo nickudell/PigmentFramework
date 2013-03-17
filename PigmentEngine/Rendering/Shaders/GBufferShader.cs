@@ -7,12 +7,12 @@ using SlimDX.Direct3D11;
 
 namespace Pigment.Engine.Rendering.Shaders
 {
-	public class BumpShader : LightShader
+	public class GBufferShader : LightShader
 	{
 		/// <summary>
 		/// InputLayout maker class for bumpmap Shaders
 		/// </summary>
-		private class BumpInputLayoutMaker : IInputLayoutProvider
+		private class GBufferInputLayoutMaker : IInputLayoutProvider
 		{
 			/// <summary>
 			/// Builds an input layout based on what this shader requires, and the shader signature passed to it
@@ -39,8 +39,7 @@ namespace Pigment.Engine.Rendering.Shaders
 		/// Initializes a new instance of the <see cref="GBufferShader"/> class.
 		/// </summary>
 		/// <param name="device">The device.</param>
-        public BumpShader(Device device)
-            : this(device, "shaders/bump.fx", "shaders/bump.fx", new BumpInputLayoutMaker())
+		public GBufferShader(Device device) : this(device, "shaders/gbuffer.fx","shaders/gbuffer.fx", new GBufferInputLayoutMaker())
 		{
 
 		}
@@ -51,8 +50,7 @@ namespace Pigment.Engine.Rendering.Shaders
 		/// <param name="device">The device.</param>
 		/// <param name="vertexShaderPath">The vertex shader path.</param>
 		/// <param name="pixelShaderPath">The pixel shader path.</param>
-        public BumpShader(Device device, string vertexShaderPath, string pixelShaderPath)
-            : this(device, vertexShaderPath, pixelShaderPath, new BumpInputLayoutMaker())
+		public GBufferShader(Device device, string vertexShaderPath, string pixelShaderPath) : this(device,vertexShaderPath, pixelShaderPath, new GBufferInputLayoutMaker())
 		{
 
 		}
@@ -64,8 +62,7 @@ namespace Pigment.Engine.Rendering.Shaders
 		/// <param name="vertexShaderPath">The vertex shader path.</param>
 		/// <param name="pixelShaderPath">The pixel shader path.</param>
 		/// <param name="inputLayoutMaker">The input layout maker.</param>
-        protected BumpShader(Device device, string vertexShaderPath, string pixelShaderPath, IInputLayoutProvider inputLayoutMaker)
-            : base(device, vertexShaderPath, pixelShaderPath, inputLayoutMaker)
+		protected GBufferShader(Device device, string vertexShaderPath, string pixelShaderPath, IInputLayoutProvider inputLayoutMaker) : base(device,vertexShaderPath,pixelShaderPath,inputLayoutMaker)
 		{
 		}
 	}

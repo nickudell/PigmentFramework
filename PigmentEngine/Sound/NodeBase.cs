@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 
-namespace PigmentEngine.Sound
+namespace Pigment.Engine.Sound
 {
     public class Node<T>
     {

@@ -5,7 +5,8 @@ using System.Text;
 using SlimDX;
 using SlimDX.Direct3D11;
 using System.Diagnostics.Contracts;
-namespace Pigment.Engine.Rendering
+
+namespace Pigment.Engine.Rendering.Shaders
 {
     public abstract class WVPTransformShader : ShaderBase
     {

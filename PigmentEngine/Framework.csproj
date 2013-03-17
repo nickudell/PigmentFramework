@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PigmentEngine</RootNamespace>
     <AssemblyName>PigmentEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,44 +56,42 @@
     <Compile Include="Camera.cs" />
     <Compile Include="D3DImageSlimDX.cs" />
     <Compile Include="Frustum.cs" />
-    <Compile Include="IAngled.cs" />
-    <Compile Include="IBinormal.cs" />
-    <Compile Include="IColoured.cs" />
-    <Compile Include="IMassed.cs" />
-    <Compile Include="IMoveable.cs" />
-    <Compile Include="INormal.cs" />
+    <Compile Include="Rendering\Matter\IAngled.cs" />
+    <Compile Include="Rendering\Matter\IBinormal.cs" />
+    <Compile Include="Rendering\Matter\IColoured.cs" />
+    <Compile Include="Rendering\Matter\IMassed.cs" />
+    <Compile Include="Rendering\Matter\IMoveable.cs" />
+    <Compile Include="Rendering\Matter\INormal.cs" />
     <Compile Include="Input.cs" />
-    <Compile Include="IPositioned.cs" />
-    <Compile Include="IRotateable.cs" />
-    <Compile Include="ITangent.cs" />
-    <Compile Include="ITextured.cs" />
-    <Compile Include="Listening.cs" />
-    <Compile Include="MultiRenderTextureHelper.cs" />
+    <Compile Include="Rendering\Matter\IPositioned.cs" />
+    <Compile Include="Rendering\Matter\IRotateable.cs" />
+    <Compile Include="Rendering\Matter\ITangent.cs" />
+    <Compile Include="Rendering\Matter\ITextured.cs" />
+    <Compile Include="Sound\Listening.cs" />
+    <Compile Include="Rendering\Textures\MultiRenderTexture.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="OcTree.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="Rendering\Bitmap.cs" />
-    <Compile Include="Rendering\Common.cs" />
-    <Compile Include="Rendering\Control.cs" />
-    <Compile Include="Rendering\DynamicMesh.cs" />
-    <Compile Include="Rendering\Font.cs" />
-    <Compile Include="Rendering\FontChar.cs" />
-    <Compile Include="Rendering\FontEngine.cs" />
-    <Compile Include="Rendering\FontFile.cs" />
-    <Compile Include="Rendering\Instance.cs" />
-    <Compile Include="Rendering\InstancedMesh.cs" />
-    <Compile Include="Rendering\IRenderable.cs" />
-    <Compile Include="Rendering\Light.cs" />
-    <Compile Include="Rendering\Mesh.cs" />
-    <Compile Include="Rendering\Mesh2.cs" />
-    <Compile Include="Rendering\Nodes.cs" />
-    <Compile Include="Rendering\PointLight.cs" />
-    <Compile Include="Rendering\Quad.cs" />
-    <Compile Include="Rendering\RenderableBase.cs" />
-    <Compile Include="Rendering\RenderableIndexed.cs" />
+    <Compile Include="Rendering\Renderer.cs" />
+    <Compile Include="Rendering\UI\Bitmap.cs" />
+    <Compile Include="Rendering\UI\Controls\Control.cs" />
+    <Compile Include="Rendering\Matter\DynamicMesh.cs" />
+    <Compile Include="Rendering\UI\Font\Font.cs" />
+    <Compile Include="Rendering\UI\Font\FontChar.cs" />
+    <Compile Include="Rendering\UI\Font\FontEngine.cs" />
+    <Compile Include="Rendering\Matter\Instance.cs" />
+    <Compile Include="Rendering\Matter\InstancedMesh.cs" />
+    <Compile Include="Rendering\Matter\IRenderable.cs" />
+    <Compile Include="Rendering\Light\Light.cs" />
+    <Compile Include="Rendering\Matter\Mesh.cs" />
+    <Compile Include="Rendering\UI\Controls\Nodes.cs" />
+    <Compile Include="Rendering\Light\PointLight.cs" />
+    <Compile Include="Rendering\Matter\Quad.cs" />
+    <Compile Include="Rendering\Matter\RenderableBase.cs" />
+    <Compile Include="Rendering\Matter\RenderableIndexed.cs" />
     <Compile Include="Rendering\Shaders\BumpShaderClass.cs" />
     <Compile Include="Rendering\Shaders\ColourShader.cs" />
     <Compile Include="Rendering\Shaders\ColourTextureShader.cs" />
+    <Compile Include="Rendering\Shaders\GBufferShader.cs" />
     <Compile Include="Rendering\Shaders\FogShader.cs" />
     <Compile Include="Rendering\Shaders\IInputLayoutProvider.cs" />
     <Compile Include="Rendering\Shaders\LightShader.cs" />
@@ -100,27 +99,38 @@
     <Compile Include="Rendering\Shaders\TextureShader.cs" />
     <Compile Include="Rendering\Shaders\TransparencyShader.cs" />
     <Compile Include="Rendering\Shaders\WVPTransformShader.cs" />
-    <Compile Include="Rendering\StaticMesh.cs" />
-    <Compile Include="Rendering\TextQuad.cs" />
-    <Compile Include="Rendering\Texture.cs" />
-    <Compile Include="RenderTexture.cs" />
-    <Compile Include="RenderTextureBase.cs" />
-    <Compile Include="RenderTextureHelperNew.cs" />
-    <Compile Include="Scene.cs" />
+    <Compile Include="Rendering\Matter\StaticMesh.cs" />
+    <Compile Include="Rendering\UI\Font\TextQuad.cs" />
+    <Compile Include="Rendering\Textures\Texture.cs" />
+    <Compile Include="Rendering\Textures\RenderTextureBase.cs" />
+    <Compile Include="Rendering\Textures\RenderTexture.cs" />
+    <Compile Include="Rendering\D3DHelper.cs" />
     <Compile Include="Sound\Audio.cs" />
-    <Compile Include="Sound\BasicGeometryFactory.cs" />
     <Compile Include="Sound\MoodGraph.cs" />
     <Compile Include="Sound\MoodNode.cs" />
     <Compile Include="Sound\Music.cs" />
     <Compile Include="Sound\NodeBase.cs" />
     <Compile Include="Sound\Phrase.cs" />
     <Compile Include="Sound\Speech.cs" />
-    <Compile Include="TileSet3D.cs" />
+    <Compile Include="Rendering\Matter\TileSet3D.cs" />
     <Compile Include="Timer.cs" />
-    <Compile Include="VertexBase.cs" />
+    <Compile Include="Rendering\Matter\Vertices\VertexBase.cs" />
     <Compile Include="Sound\Wave.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shaders\bump.fx" />
+    <Content Include="Shaders\colour.fx" />
+    <Content Include="Shaders\colourtexture.fx" />
+    <Content Include="Shaders\gBuffer.fx" />
+    <Content Include="Shaders\fog.fx" />
+    <Content Include="Shaders\light.fx" />
+    <Content Include="Shaders\multilight.fx" />
+    <Content Include="Shaders\test.fx" />
+    <Content Include="Shaders\texture.fx" />
+    <Content Include="Shaders\transparency.fx" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

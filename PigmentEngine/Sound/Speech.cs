@@ -1,9 +1,8 @@
-﻿using Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Speech.Synthesis;
 
-namespace Pigment
+namespace Pigment.Engine.Sound
 {
     /*public delegate void Communication(object param);
 

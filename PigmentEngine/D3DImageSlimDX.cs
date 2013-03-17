@@ -6,7 +6,7 @@ using SlimDX.Direct3D9;
 
 namespace Pigment.WPF
 {
-    class D3DImageSlimDX : D3DImage, IDisposable
+    public class D3DImageSlimDX : D3DImage, IDisposable
     {
         [DllImport("user32.dll", SetLastError = false)]
         static extern IntPtr GetDesktopWindow();

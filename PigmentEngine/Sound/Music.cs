@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PigmentEngine.Sound
+namespace Pigment.Engine.Sound
 {
     class Music
     {

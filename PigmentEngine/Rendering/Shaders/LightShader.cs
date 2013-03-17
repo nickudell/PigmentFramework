@@ -6,7 +6,7 @@ using SlimDX.Direct3D11;
 using SlimDX;
 using System.Diagnostics.Contracts;
 
-namespace Pigment.Engine.Rendering
+namespace Pigment.Engine.Rendering.Shaders
 {
     public class LightShader : TextureShader
     {

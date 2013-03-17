@@ -15,15 +15,6 @@ cbuffer CameraBuffer
 	float padding;
 };
 
-cbuffer LightBuffer
-{
-	float4 ambientColour;
-	float4 diffuseColour;
-	float3 lightDirection;
-	float specularPower;
-	float4 specularColor;
-}
-
 //Vertex Shader input
 struct VEX_IN
 {
@@ -77,21 +68,18 @@ PIX_IN VShader(VEX_IN input)
 //Pixel shader
 float4 PShader(PIX_IN input) : SV_Target
 {
-	float4 textureColour = shaderTextures[0].Sample(SampleType,input.tex);
+	PIX_OUT output;
+	output.albedo = shaderTextures[0].Sample(SampleType,input.tex);
 	
 	float4 bumpMap = shaderTextures[1].Sample(SampleType,input.tex);
 	bumpMap = (bumpMap*2.0f)-1.0f;
 	float3 bumpNormal = input.normal + bumpMap.x * input.tangent + bumpMap.y * input.binormal;
-	bumpNormal = normalize(bumpNormal);
-
-	float3 lightDir = -lightDirection;
-	float lightIntensity = saturate(dot(bumpNormal,lightDir));
+	output.normal = normalize(bumpNormal);
 
 	float3 reflection = normalize(2*lightIntensity*bumpNormal - lightDir);
 	float4 specular = pow(saturate(dot(reflection,input.viewDirection)),specularPower);
+	output.shininess = float4(0,0,0,0);
+	output.emissive = float4(0,0,0,0);
 
-	float4 lightColour = ambientColour + saturate(diffuseColour * max(lightIntensity,0));
-
-	lightColour =  lightColour * textureColour;
-	return saturate(lightColour + specular);
+	return output;
 }

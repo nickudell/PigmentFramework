@@ -6,7 +6,7 @@ using SlimDX.D3DCompiler;
 using SlimDX;
 using SlimDX.Direct3D11;
 
-namespace Pigment.Engine.Rendering
+namespace Pigment.Engine.Rendering.Shaders
 {
     /// <summary>
     /// Simple colour shader

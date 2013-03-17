@@ -6,8 +6,9 @@ using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.D3DCompiler;
 using System.Diagnostics.Contracts;
+using Pigment.Engine.Rendering.Textures;
 
-namespace Pigment.Engine.Rendering
+namespace Pigment.Engine.Rendering.Shaders
 {
     /// <summary>
     /// Shader that renders transformed vertices with a texture

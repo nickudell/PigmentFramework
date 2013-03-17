@@ -8,7 +8,7 @@ using Buffer = SlimDX.Direct3D11.Buffer;
 using SlimDX.D3DCompiler;
 using System.Diagnostics.Contracts;
 
-namespace Pigment.Engine.Rendering
+namespace Pigment.Engine.Rendering.Shaders
 {
 	/// <summary>
 	/// Shader that renders transformed vertices with a texture
