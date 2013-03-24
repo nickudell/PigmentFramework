@@ -88,11 +88,11 @@ namespace Pigment.Engine.Rendering.UI.Font
                         }
                         else if (tokens[i] == "x")
                         {
-                            characters[index].Position.Item1 = int.Parse(tokens[i + 1]);
+                            characters[index].Position.X = int.Parse(tokens[i + 1]);
                         }
                         else if(tokens[i] == "y")
                         {
-                            characters[index].Position.Item2 = int.Parse(tokens[i + 1]);
+                            characters[index].Position.Y = int.Parse(tokens[i + 1]);
                         }
                         else if(tokens[i] == "width")
                         {
@@ -104,7 +104,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                         }
                         else if (tokens[i] == "xoffset")
                         {
-                            characters[index].Offset.Item1 = int.Parse(tokens[i + 1]);
+                            characters[index].Offset.X = int.Parse(tokens[i + 1]);
                         }
                         else if (tokens[i] == "yoffset")
                         {

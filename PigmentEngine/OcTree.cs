@@ -137,11 +137,6 @@ namespace Pigment.Engine.Octree
             }
         }
 
-        public delegate void AddOrRemoveItemDelegate(OcTree<I> sender, I item);
-
-        protected event AddOrRemoveItemDelegate OnItemAdd;
-        protected event AddOrRemoveItemDelegate OnItemRemove;
-
         /// <summary>
         /// Gets the enumerator.
         /// </summary>
@@ -297,7 +292,6 @@ namespace Pigment.Engine.Octree
             if (currentNode.contents.Count < MaxContents)
             {
                 currentNode.contents.Add(item);
-                if (OnItemAdd != null) OnItemAdd(currentNode, item);
             }
             else
             {

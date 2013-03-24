@@ -96,7 +96,7 @@ namespace Pigment.Engine.Rendering.UI
             DataStream vertexData = new DataStream(vertexBufferDesc.SizeInBytes, true, true);
             foreach (VertexPosTex vertex in vertices)
             {
-                vertexData.Write(vertex.GetStruct());
+                vertexData.Write(vertex.GetBytes(),0,vertex.GetStride());
             }
             vertexData.Position = 0;
             return new SlimDX.Direct3D11.Buffer(device, vertexData, vertexBufferDesc);
@@ -121,7 +121,7 @@ namespace Pigment.Engine.Rendering.UI
             box.Data.Position = 0;
             foreach (VertexPosTex vertex in vertices)
             {
-                box.Data.Write(vertex.GetStruct());
+                box.Data.Write(vertex.GetBytes(),0,vertex.GetStride());
             }
             box.Data.Position = 0;
             context.UnmapSubresource(vertexBuffer, 0);

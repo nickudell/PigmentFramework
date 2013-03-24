@@ -1,5 +1,6 @@
 ﻿using SlimDX;
 using SlimDX.Direct3D11;
+using System;
 
 namespace Pigment.Engine.Rendering.Textures
 {
@@ -108,13 +109,45 @@ namespace Pigment.Engine.Rendering.Textures
             return shaderResourceView[arrayIndex];
         }
 
-        public override void Dispose()
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
         {
-            for (int i = 0; i < shaderResourceView.Length; i++)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool managed)
+        {
+            if (managed)
             {
-                shaderResourceView[i].Dispose();
-                renderTargetView[i].Dispose();
-                Texture[i].Dispose();
+                for (int i = 0; i < shaderResourceView.Length; i++)
+                {
+                    //Check if shaderResourceView[i] still exists and if so, dispose it and set it to null.
+                    if (shaderResourceView[i] != null)
+                    {
+                        shaderResourceView[i].Dispose();
+                        shaderResourceView[i] = null;
+                    }
+
+                    //Check if renderTargetView[i] still exists and if so, dispose it and set it to null.
+                    if (renderTargetView[i] != null)
+                    {
+                        renderTargetView[i].Dispose();
+                        renderTargetView[i] = null;
+                    }
+
+                    //Check if Texture[i] still exists and if so, dispose it and set it to null.
+                    if (Texture[i] != null)
+                    {
+                        Texture[i].Dispose();
+                        Texture[i] = null;
+                    }
+                }
             }
         }
     }

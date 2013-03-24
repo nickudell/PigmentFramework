@@ -45,7 +45,7 @@ namespace Pigment.Engine.Sound
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected void Dispose(bool managed)
+        protected virtual void Dispose(bool managed)
         {
             if (managed)
             {

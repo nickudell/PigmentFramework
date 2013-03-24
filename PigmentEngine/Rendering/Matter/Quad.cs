@@ -7,6 +7,8 @@ using System.Windows;
 using Pigment.WPF;
 using Pigment.Engine.Rendering.Matter.Vertices;
 
+using Common;
+
 namespace Pigment.Engine.Rendering.Matter
 {
     /// <summary>
@@ -66,14 +68,14 @@ namespace Pigment.Engine.Rendering.Matter
         /// <summary>
         /// The width and height of the screen in pixels
         /// </summary>
-        private Tuple<int,int> screenDimensions;
+        private Vector2Int screenDimensions;
         /// <summary>
         /// Gets or sets the screen width and height in pixels
         /// </summary>
         /// <value>
         /// The screen dimensions in pixels.
         /// </value>
-        public Tuple<int, int> ScreenDimensions
+        public Vector2Int ScreenDimensions
         {
             get { return screenDimensions; }
             set
@@ -86,14 +88,14 @@ namespace Pigment.Engine.Rendering.Matter
         /// <summary>
         /// The position of the top-left vertex of this quad
         /// </summary>
-        private Tuple<int, int> position;
+        private Vector2Int position;
         /// <summary>
         /// Gets or sets the position of the top-left vertex.
         /// </summary>
         /// <value>
         /// The position of the top-left vertex.
         /// </value>
-        public Tuple<int, int> Position
+        public Vector2Int Position
         {
             get { return position; }
             set
@@ -157,8 +159,8 @@ namespace Pigment.Engine.Rendering.Matter
         /// <param name="colour">The colour to blend this quad's texture with.</param>
         public Quad(int x, int y, int screenWidth, int screenHeight, string textureFileName, int width, int height, Color4 colour)
         {
-            this.position = new Tuple<int, int>(x, y);
-            this.screenDimensions = new Tuple<int, int>(screenWidth, screenHeight);
+            this.position = new Vector2Int(x, y);
+            this.screenDimensions = new Vector2Int(screenWidth, screenHeight);
             this.width = width;
             this.height = height;
             this.Colour = colour;

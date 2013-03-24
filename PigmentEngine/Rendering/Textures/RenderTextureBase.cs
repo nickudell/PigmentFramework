@@ -1,5 +1,6 @@
 ﻿using SlimDX;
 using SlimDX.Direct3D11;
+using System;
 
 namespace Pigment.Engine.Rendering.Textures
 {
@@ -46,10 +47,5 @@ namespace Pigment.Engine.Rendering.Textures
         /// <param name="context">The context whose render target we are clearing</param>
         /// <param name="color">The colour we wish to clear the render target to</param>
         public abstract void ClearRenderTarget(DeviceContext context, Color4 color);
-
-        /// <summary>
-        /// Dispose of all the resources this object holds.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

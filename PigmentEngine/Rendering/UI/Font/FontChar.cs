@@ -1,4 +1,5 @@
-﻿using SlimDX;
+﻿using Common;
+using SlimDX;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -13,7 +14,7 @@ namespace Pigment.Engine.Rendering.UI.Font
         /// <summary>
         /// The position of the character
         /// </summary>
-        public Tuple<int,int> Position;
+        public Vector2Int Position;
         /// <summary>
         /// The character's width and height
         /// </summary>
@@ -23,7 +24,7 @@ namespace Pigment.Engine.Rendering.UI.Font
         /// <summary>
         /// The offset of the character 
         /// </summary>
-        public Tuple<int,int> Offset;
+        public Vector2Int Offset;
         /// <summary>
         /// How much to advance in the X direction when this character is used
         /// </summary>
@@ -35,10 +36,10 @@ namespace Pigment.Engine.Rendering.UI.Font
 
         public FontChar()
         {
-            Position = new Tuple<int, int>(0, 0);
+            Position = new Vector2Int(0, 0);
             Width = 0;
             Height = 0;
-            Offset = new Tuple<int, int>(0, 0);
+            Offset = new Vector2Int(0, 0);
             XAdvance = 0;
             KerningList = new List<Kerning>();
         }

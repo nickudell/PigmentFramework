@@ -4,7 +4,7 @@ using System.Speech.Recognition;
 
 namespace Pigment.Engine.Sound
 {
-    public class Listening
+    public class Listening : IDisposable
     {
         public enum ListenerState
         {
@@ -88,5 +88,31 @@ namespace Pigment.Engine.Sound
             grammar.Name = "RequestPhrase";
             return grammar;
         }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool managed)
+        {
+            if (managed)
+            {
+                //Check if ear still exists and if so, dispose it and set it to null.
+                if(ear != null)
+                {
+                    ear.Dispose();
+                    ear = null;
+                }
+            }
+        }
+            
     }
 }

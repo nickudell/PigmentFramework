@@ -161,8 +161,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                                 //First move word down to next line
                                 quads[j].LineNumber++;
                                 quads[j].WordNumber = 1;
-                                quads[j].Position.X = (int)(x + ( quads[j].FontChar.Offset.X * sizeScale));
-                                quads[j].Position.Y = (int)(y + (quads[j].FontChar.Offset.Y * sizeScale));
+                                quads[j].Position = new Common.Vector2Int((int)(x + ( quads[j].FontChar.Offset.X * sizeScale)),(int)(y + (quads[j].FontChar.Offset.Y * sizeScale)));
                                 float scaledAdvance = quads[j].FontChar.XAdvance * sizeScale;
                                 x+= scaledAdvance;
                                 lineWidth += scaledAdvance;
@@ -215,7 +214,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                                 {
                                     if(quads[k].LineNumber == lineNumber +1)
                                     {
-                                        quads[k].Position.X -= (int)textOffset;
+                                        quads[k].Position = new Common.Vector2Int(quads[k].Position.X - (int)textOffset, quads[k].Position.Y);
                                     }
                                 }
                                 x-= textOffset;
@@ -224,7 +223,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                                 {
                                     if(quads[k].LineNumber == lineNumber)
                                     {
-                                        quads[k].Position.X +=(int)textOffset;
+                                        quads[k].Position = new Common.Vector2Int(quads[k].Position.X + (int)textOffset,quads[k].Position.Y);
                                     }
                                 }
                             }
@@ -318,7 +317,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                     {
                         if (quads[j].LineNumber == lineNumber)
                         {
-                            quads[j].Position.X -= (int)textOffset;
+                            quads[j].Position = new Common.Vector2Int(quads[j].Position.X - (int)textOffset, quads[j].Position.Y);
                         }
                     }
                     x -= textOffset;
@@ -336,7 +335,7 @@ namespace Pigment.Engine.Rendering.UI.Font
                         if (quads[j].LineNumber == lineNumber)
                         {
                             textOffset = xAdvance;
-                            quads[j].Position.X -= (int)xAdvance;
+                            quads[j].Position = new Common.Vector2Int(quads[j].Position.X - (int)xAdvance,quads[j].Position.Y);
                         }
                     }
                     x -= textOffset;

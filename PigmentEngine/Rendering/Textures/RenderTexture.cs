@@ -1,12 +1,13 @@
 ﻿using SlimDX;
 using SlimDX.Direct3D11;
+using System;
 
 namespace Pigment.Engine.Rendering.Textures
 {
     /// <summary>
     /// Helper class for render-to-texture functionality to save time
     /// </summary>
-    public class RenderTexture : RenderTextureBase
+    public class RenderTexture : RenderTextureBase, IDisposable
     {
         //The texture we are rendering to
         public Texture2D Texture { get; set; }
@@ -79,16 +80,50 @@ namespace Pigment.Engine.Rendering.Textures
             return shaderResourceView;
         }
 
-        public override void Dispose()
-        {
-            shaderResourceView.Dispose();
-            renderTargetView.Dispose();
-            Texture.Dispose();
-        }
-
         public override void WriteToFile(DeviceContext context)
         {
             Texture2D.ToFile(context, Texture, ImageFileFormat.Jpg, "texture.jpg");
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool managed)
+        {
+            if (managed)
+            {
+                //Check if Texture still exists and if so, dispose it and set it to null.
+                if (Texture != null)
+                {
+                    Texture.Dispose();
+                    Texture = null;
+                }
+
+                //Check if renderTargetView still exists and if so, dispose it and set it to null.
+                if (renderTargetView != null)
+                {
+                    renderTargetView.Dispose();
+                    renderTargetView = null;
+                }
+
+                //Check if shaderResourceView still exists and if so, dispose it and set it to null.
+                if (shaderResourceView != null)
+                {
+                    shaderResourceView.Dispose();
+                    shaderResourceView = null;
+                }
+            }
+
         }
     }
 }

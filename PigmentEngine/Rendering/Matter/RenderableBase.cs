@@ -65,7 +65,7 @@ namespace Pigment.Engine.Rendering.Matter
         {
             Contract.Requires<ArgumentNullException>(vertexTopology != null, "vertexTopology");
             this.vertexTopology = vertexTopology;
-            vertexStride = Marshal.SizeOf(typeof(V));
+            vertexStride = Marshal.SizeOf(Activator.CreateInstance<V>().GetStride());
         }
 
         /// <summary>
@@ -80,15 +80,19 @@ namespace Pigment.Engine.Rendering.Matter
             Contract.Requires<ArgumentException>(vertices.Count > 0);
             Contract.Ensures(Contract.Result<SlimDX.Direct3D11.Buffer>() != null);
             SlimDX.Direct3D11.Buffer vertexBuffer;
-            using (DataStream vertexStream = new DataStream(vertexStride * vertices.Count, true, true))
+            V tempVertex = vertices[0];
+            int stride = tempVertex.GetStride();
+            using (DataStream vertexStream = new DataStream(vertices.Count*stride, true, true))
             {
                 foreach (V vertex in vertices)
                 {
-                    vertexStream.Write(vertex.GetStruct());
+                    byte[] bytes = vertex.GetBytes();
+                    vertexStream.Write(bytes, 0, stride);
                 }
                 vertexStream.Position = 0;
                 vertexBuffer = new SlimDX.Direct3D11.Buffer(device, vertexStream, vertexStride * vertices.Count, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
             }
+            
             return vertexBuffer;
         }
 

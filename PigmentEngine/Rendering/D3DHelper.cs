@@ -14,15 +14,33 @@ namespace Pigment.Engine.Rendering
 {
     public class D3DHelper : IDisposable
     {
+        /// <summary>
+        /// The D3D device
+        /// </summary>
         public Device D3DDevice;
 
+        /// <summary>
+        /// The context
+        /// </summary>
         public DeviceContext Context;
         RenderTargetView SampleRenderView;
         DepthStencilView SampleDepthView;
         Texture2D DepthTexture;
+        /// <summary>
+        /// The window width
+        /// </summary>
         public int WindowWidth;
+        /// <summary>
+        /// The window height
+        /// </summary>
         public int WindowHeight;
 
+        /// <summary>
+        /// Gets or sets the shared texture.
+        /// </summary>
+        /// <value>
+        /// The shared texture.
+        /// </value>
         public Texture2D SharedTexture
         {
             get;
@@ -36,7 +54,16 @@ namespace Pigment.Engine.Rendering
 
         private bool vsync;
 
+        /// <summary>
+        /// The depth enabled
+        /// </summary>
         private bool depthEnabled;
+        /// <summary>
+        /// Gets or sets a value indicating whether [depth enabled].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [depth enabled]; otherwise, <c>false</c>.
+        /// </value>
         public bool DepthEnabled
         {
             get
@@ -60,6 +87,16 @@ namespace Pigment.Engine.Rendering
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="D3DHelper"/> class.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Width must be greater than 0.
+        /// or
+        /// Height must be greater than 0.
+        /// </exception>
         public D3DHelper(int width, int height)
         {
             if (width > 0)
@@ -82,9 +119,59 @@ namespace Pigment.Engine.Rendering
             InitD3D();
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            DestroyD3D();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="managed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool managed)
+        {
+            if (managed)
+            {
+                if (SampleRenderView != null)
+                {
+                    SampleRenderView.Dispose();
+                    SampleRenderView = null;
+                }
+
+                if (SampleDepthView != null)
+                {
+                    SampleDepthView.Dispose();
+                    SampleDepthView = null;
+                }
+
+                if (SharedTexture != null)
+                {
+                    SharedTexture.Dispose();
+                    SharedTexture = null;
+                }
+
+                if (DepthTexture != null)
+                {
+                    DepthTexture.Dispose();
+                    DepthTexture = null;
+                }
+
+                if (Context != null)
+                {
+                    Context.Dispose();
+                    Context = null;
+                }
+
+                if (D3DDevice != null)
+                {
+                    D3DDevice.Dispose();
+                    D3DDevice = null;
+                }
+            }
         }
 
         public void FinishRender()
@@ -253,46 +340,6 @@ namespace Pigment.Engine.Rendering
             SharedTexture = new Texture2D(D3DDevice, colordesc);
 
             SampleRenderView = new RenderTargetView(D3DDevice, SharedTexture);
-        }
-
-        void DestroyD3D()
-        {
-
-            if (SampleRenderView != null)
-            {
-                SampleRenderView.Dispose();
-                SampleRenderView = null;
-            }
-
-            if (SampleDepthView != null)
-            {
-                SampleDepthView.Dispose();
-                SampleDepthView = null;
-            }
-
-            if (SharedTexture != null)
-            {
-                SharedTexture.Dispose();
-                SharedTexture = null;
-            }
-
-            if (DepthTexture != null)
-            {
-                DepthTexture.Dispose();
-                DepthTexture = null;
-            }
-
-            if (Context != null)
-            {
-                Context.Dispose();
-                Context = null;
-            }
-
-            if (D3DDevice != null)
-            {
-                D3DDevice.Dispose();
-                D3DDevice = null;
-            }
         }
     }
 }

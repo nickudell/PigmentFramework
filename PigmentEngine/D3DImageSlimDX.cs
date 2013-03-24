@@ -8,8 +8,6 @@ namespace Pigment.WPF
 {
     public class D3DImageSlimDX : D3DImage, IDisposable
     {
-        [DllImport("user32.dll", SetLastError = false)]
-        static extern IntPtr GetDesktopWindow();
 
         static int NumActiveImages = 0;
         static Direct3DEx D3DContext;
@@ -23,7 +21,16 @@ namespace Pigment.WPF
             NumActiveImages++;
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool managed)
         {
             SetBackBufferSlimDX(null);
             if (SharedTexture != null)
@@ -95,7 +102,7 @@ namespace Pigment.WPF
                 PresentParameters presentparams = new PresentParameters();
                 presentparams.Windowed = true;
                 presentparams.SwapEffect = SwapEffect.Discard;
-                presentparams.DeviceWindowHandle = GetDesktopWindow();
+                presentparams.DeviceWindowHandle = NativeMethods.DesktopWindow();
                 presentparams.PresentationInterval = PresentInterval.Immediate;
 
                 D3DDevice = new DeviceEx(D3DContext, 0, DeviceType.Hardware, IntPtr.Zero, CreateFlags.HardwareVertexProcessing | CreateFlags.Multithreaded | CreateFlags.FpuPreserve, presentparams);

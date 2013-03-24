@@ -5,12 +5,13 @@ using System.Text;
 using SlimDX.RawInput;
 using SlimDX.Multimedia;
 using System.Windows.Forms;
+using Common;
 
 namespace Pigment.Engine.Input
 {
     public class Input
     {
-        public Tuple<int,int> MousePos { get; set; }
+        public Vector2Int MousePos { get; set; }
         public int MouseWheelDelta { get; set; }
         public Dictionary<System.Windows.Forms.Keys, bool> Pressed;
 
@@ -22,7 +23,7 @@ namespace Pigment.Engine.Input
             Device.RegisterDevice(UsagePage.Generic, UsageId.Mouse, DeviceFlags.None);
             Device.MouseInput += new EventHandler<MouseInputEventArgs>(mouseInput);
             MouseWheelDelta = 0;
-            MousePos = new Tuple<int,int>(0, 0);
+            MousePos = new Vector2Int(0, 0);
             Pressed = new Dictionary<Keys, bool>();
         }
 
@@ -71,7 +72,7 @@ namespace Pigment.Engine.Input
 
         private void mouseInput(object sender, MouseInputEventArgs e)
         {
-            MousePos = new Tuple<int, int>(e.X, e.Y);
+            MousePos = new Vector2Int(e.X, e.Y);
             MouseWheelDelta += e.WheelDelta;
             EventArgs args = new EventArgs();
 

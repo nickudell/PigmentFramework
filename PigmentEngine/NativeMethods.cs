@@ -24,6 +24,22 @@ namespace Pigment
         private static extern bool QueryPerformanceCounter(ref long performanceCount);
 
         /// <summary>
+        /// Gets the desktop window.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = false)]
+        private static extern IntPtr GetDesktopWindow();
+
+        /// <summary>
+        /// Gets the desktop window.
+        /// </summary>
+        /// <returns></returns>
+        public static IntPtr DesktopWindow()
+        {
+            return GetDesktopWindow();
+        }
+
+        /// <summary>
         /// Gets the number of ticks fired per second.
         /// </summary>
         /// <returns>The number of ticks per second.</returns>
